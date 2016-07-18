@@ -78,7 +78,7 @@ class Status(Exception):
 
         # And now the inverse...
         self.i_map = {}
-        for k, v in self.s_map.iteritems():
+        for k, v in self.s_map.items():
             self.i_map[v] = k
 
         if isinstance(status, int):
@@ -253,7 +253,7 @@ class NagiosCheck(object):
             except UsageError as e:
                 msg = str(e)
                 if msg != "":
-                    print >>self.err, "%s\n" % msg
+                    print("%s\n" % msg, file=self.err)
                 self.parser.print_usage()
                 self.exit_cb(2)
             except Status as e:
@@ -265,7 +265,7 @@ class NagiosCheck(object):
                              "Unhandled Python exception: %r" % e)
             self.exit_cb(Status.EXIT_UNKNOWN)
         except Status as s:
-            print >>self.out, s.output(self.verbosity)
+            print(s.output(self.verbosity), file=self.out)
             self.exit_cb(s.status)
 
 class PerformanceMetric(object):
