@@ -250,21 +250,21 @@ class NagiosCheck(object):
                 raise Status('unknown', "%s.check() returned without "
                              "raising %s.Status" %
                              (self.__class__.__name__, __name__))
-            except UsageError, e:
+            except UsageError as e:
                 msg = str(e)
                 if msg != "":
                     print >>self.err, "%s\n" % msg
                 self.parser.print_usage()
                 self.exit_cb(2)
-            except Status, e:
+            except Status as e:
                 raise
-            except SystemExit, e:
+            except SystemExit as e:
                 self.exit_cb(e.code)
-            except Exception, e:
+            except Exception as e:
                 raise Status('unknown',
                              "Unhandled Python exception: %r" % e)
             self.exit_cb(Status.EXIT_UNKNOWN)
-        except Status, s:
+        except Status as s:
             print >>self.out, s.output(self.verbosity)
             self.exit_cb(s.status)
 
